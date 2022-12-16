@@ -31,7 +31,7 @@ export default function App() {
           setDbInitialize(true)
         }).catch(err => {
           console.log(err)
-        })
+        })        
 
         await new Promise(resolve => setTimeout(resolve, 2000));
       }  catch(e) {
@@ -46,12 +46,14 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
-      await SplashScreen.hideAsync();
+      if (dbInitialize) {
+        SplashScreen.hideAsync();
+      }
     }
   }, [appIsReady]);
 
   if (!appIsReady) {
-    return null;
+    return null
   }
   
 
