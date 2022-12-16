@@ -6,3 +6,18 @@ export function getMapPreview(lat, lng) {
   // console.log(imagePreviewUrl)
   return imagePreviewUrl
 }
+
+export async function getLocationAddress(lat, lng) {
+  const url = `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&apiKey=${API_KEY}`
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error("Something went wrong! Failed to fetch address")
+  }
+
+  const data = await response.json()
+
+  // see docs https://docs.geoapify.com/api/geocoding/geocode-reverse/
+  const address = data.features[0].properties.formatted
+  return address
+}
